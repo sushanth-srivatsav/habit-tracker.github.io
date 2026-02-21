@@ -96,17 +96,57 @@ function loadGoals() {
     const key = currentMode + "_goals";
     const goals = JSON.parse(localStorage.getItem(key)) || [];
 
-    goals.forEach(goal => {
+    goals.forEach((goal, index) => {
         const li = document.createElement("li");
-        li.innerText = goal.name;
-        li.onclick = () => selectGoal(goal);
+
+        const span = document.createElement("span");
+        span.innerText = goal.name;
+        span.style.cursor = "pointer";
+        span.onclick = () => selectGoal(goal);
+
+        const delBtn = document.createElement("button");
+        delBtn.innerText = "Delete";
+        delBtn.style.marginLeft = "10px";
+        delBtn.onclick = (e) => {
+            e.stopPropagation();
+            deleteGoal(index);
+        };
+
+        li.appendChild(span);
+        li.appendChild(delBtn);
         list.appendChild(li);
     });
-}
-// SELECT GOAL
+}// SELECT GOAL
 function selectGoal(goal) {
     currentGoal = goal;
     loadChart();
+}
+// DELETE GOAL
+function deleteGoal(index) {
+
+    const key = currentMode + "_goals";
+    const goals = JSON.parse(localStorage.getItem(key)) || [];
+
+    const goalToDelete = goals[index].name;
+
+    // Remove goal from goal list
+    goals.splice(index, 1);
+    localStorage.setItem(key, JSON.stringify(goals));
+
+    // Remove all graph data related to this goal
+    Object.keys(localStorage).forEach(storageKey => {
+        if (storageKey.startsWith(currentMode + "_" + goalToDelete + "_")) {
+            localStorage.removeItem(storageKey);
+        }
+    });
+
+    // Reset currentGoal if deleted
+    if (currentGoal && currentGoal.name === goalToDelete) {
+        currentGoal = "";
+        if (chart) chart.destroy();
+    }
+
+    loadGoals();
 }
 // GRAPH
 function loadChart() {
