@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Progress Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <h2>Enter Password</h2>
+        <input type="password" id="passwordInput" placeholder="Password">
+        <button onclick="checkPassword()">Enter</button>
+        <p id="errorMsg"></p>
+    </div>
+</div>
+
+<div id="app" class="hidden">
+    <h1 id="modeTitle"></h1>
+    <input type="text" id="goalInput" placeholder="Enter Goal">
+    <button onclick="addGoal()">Add Goal</button>
+    <ul id="goalList"></ul>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
