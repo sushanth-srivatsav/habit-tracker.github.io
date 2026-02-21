@@ -21,6 +21,32 @@
     <input type="text" id="goalInput" placeholder="Enter Goal">
     <button onclick="addGoal()">Add Goal</button>
     <ul id="goalList"></ul>
+    <button onclick="toggleMode()">Switch Mode</button>
+
+<h2>Goals</h2>
+<input type="text" id="goalInput" placeholder="Enter Goal">
+<button onclick="addGoal()">Add Goal</button>
+<ul id="goalList"></ul>
+
+<hr>
+
+<h2>Graph Controls</h2>
+<label>Day:</label>
+<input type="number" id="dayInput" min="1" max="31">
+
+<label>Value:</label>
+<input type="number" id="valueInput">
+
+<label>Y-Axis Max:</label>
+<input type="number" id="yMax" placeholder="Default 10">
+
+<button onclick="saveDayValue()">Save Entry</button>
+
+<br><br>
+<button onclick="changeMonth(-1)">Previous Month</button>
+<button onclick="changeMonth(1)">Next Month</button>
+
+<canvas id="goalChart"></canvas>
 </div>
 
 <script src="script.js"></script>
