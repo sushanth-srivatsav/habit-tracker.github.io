@@ -69,17 +69,26 @@ function toggleMode() {
 
 // GOALS
 function addGoal() {
-    const input = document.getElementById("goalInput");
-    if (!input.value) return;
+    const nameInput = document.getElementById("goalInput");
+    const yLabelInput = document.getElementById("yLabelInput");
+
+    if (!nameInput.value) return;
 
     const key = currentMode + "_goals";
     const goals = JSON.parse(localStorage.getItem(key)) || [];
-    goals.push(input.value);
+
+    goals.push({
+        name: nameInput.value,
+        yLabel: yLabelInput.value || "Value"
+    });
+
     localStorage.setItem(key, JSON.stringify(goals));
-    input.value = "";
+
+    nameInput.value = "";
+    yLabelInput.value = "";
+
     loadGoals();
 }
-
 function loadGoals() {
     const list = document.getElementById("goalList");
     list.innerHTML = "";
