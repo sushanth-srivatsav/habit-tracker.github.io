@@ -98,12 +98,11 @@ function loadGoals() {
 
     goals.forEach(goal => {
         const li = document.createElement("li");
-        li.innerText = goal;
+        li.innerText = goal.name;
         li.onclick = () => selectGoal(goal);
         list.appendChild(li);
     });
 }
-
 // SELECT GOAL
 function selectGoal(goal) {
     currentGoal = goal;
