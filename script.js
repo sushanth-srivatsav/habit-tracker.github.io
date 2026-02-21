@@ -108,7 +108,6 @@ function selectGoal(goal) {
     currentGoal = goal;
     loadChart();
 }
-
 // GRAPH
 function loadChart() {
     if (!currentGoal) return;
@@ -117,7 +116,7 @@ function loadChart() {
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
     const labels = Array.from({length: daysInMonth}, (_, i) => i + 1);
 
-    const key = `${currentMode}_${currentGoal}_${currentYear}_${currentMonth}`;
+    const key = `${currentMode}_${currentGoal.name}_${currentYear}_${currentMonth}`;
     const stored = JSON.parse(localStorage.getItem(key)) || Array(daysInMonth).fill(0);
 
     if (chart) chart.destroy();
@@ -127,7 +126,7 @@ function loadChart() {
         data: {
             labels: labels,
             datasets: [{
-                label: currentGoal,
+                label: currentGoal.name,
                 data: stored,
                 borderWidth: 2,
                 tension: 0.3
@@ -137,7 +136,11 @@ function loadChart() {
             scales: {
                 y: {
                     beginAtZero: true,
-                    suggestedMax: parseInt(document.getElementById("yMax").value) || 10
+                    suggestedMax: parseInt(document.getElementById("yMax").value) || 10,
+                    title: {
+                        display: true,
+                        text: currentGoal.yLabel
+                    }
                 }
             }
         }
@@ -152,7 +155,7 @@ function saveDayValue() {
     const value = parseInt(document.getElementById("valueInput").value);
 
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-    const key = `${currentMode}_${currentGoal}_${currentYear}_${currentMonth}`;
+    const key = `${currentMode}_${currentGoal.name}_${currentYear}_${currentMonth}`;
     const stored = JSON.parse(localStorage.getItem(key)) || Array(daysInMonth).fill(0);
 
     stored[day] = value;
