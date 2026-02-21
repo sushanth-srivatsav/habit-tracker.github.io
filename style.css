@@ -1,12 +1,80 @@
 body {
     margin: 0;
-    font-family: Arial;
+    font-family: 'Segoe UI', sans-serif;
+    transition: 0.4s ease;
 }
 
-.hidden {
-    display: none;
+/* ---------------- DARK MODE ---------------- */
+.dark {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: #ffffff;
 }
 
+/* ---------------- LIGHT MODE ---------------- */
+.bright {
+    background: linear-gradient(135deg, #ffecd2, #fcb69f);
+    color: #222;
+}
+
+/* ---------------- APP CONTAINER ---------------- */
+#app {
+    padding: 30px;
+}
+
+/* ---------------- CARDS ---------------- */
+.card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+/* ---------------- BUTTONS ---------------- */
+button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 5px;
+    font-weight: bold;
+    transition: 0.3s ease;
+}
+
+.dark button {
+    background: #00c6ff;
+    color: black;
+}
+
+.bright button {
+    background: #ff6a00;
+    color: white;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+/* ---------------- GOAL LIST ---------------- */
+#goalList li {
+    padding: 8px;
+    margin: 6px 0;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.dark #goalList li {
+    background: rgba(255,255,255,0.2);
+    color: #ffffff;
+}
+
+.bright #goalList li {
+    background: rgba(0,0,0,0.1);
+    color: #222;
+}
+
+/* ---------------- MODAL ---------------- */
 .modal {
     position: fixed;
     width: 100%;
@@ -19,16 +87,7 @@ body {
 
 .modal-content {
     background: white;
-    padding: 20px;
+    padding: 30px;
+    border-radius: 10px;
     text-align: center;
-}
-
-.dark {
-    background-color: #111;
-    color: white;
-}
-
-.bright {
-    background-color: #f5f5f5;
-    color: black;
 }
