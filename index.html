@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>Habit Tracker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <title>Progress Tracker</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<!-- LOGIN MODAL -->
 <div id="loginModal" class="modal">
-    <div class="modal-content">
+    <div class="modal-box">
         <h2>Enter Password</h2>
         <input type="password" id="passwordInput" placeholder="Password">
         <button onclick="checkPassword()">Enter</button>
@@ -16,38 +18,39 @@
     </div>
 </div>
 
+<!-- APP -->
 <div id="app" class="hidden">
+
     <h1 id="greeting"></h1>
-    <h1 id="modeTitle"></h1>
-    <input type="text" id="goalInput" placeholder="Enter Goal">
-    <button onclick="addGoal()">Add Goal</button>
-    <ul id="goalList"></ul>
     <button onclick="toggleMode()">Switch Mode</button>
 
-<h2>Goals</h2>
-<input type="text" id="goalInput" placeholder="Enter Goal">
-<button onclick="addGoal()">Add Goal</button>
-<ul id="goalList"></ul>
+    <div class="card">
+        <h2>Add Goal</h2>
+        <input type="text" id="goalInput" placeholder="Enter Goal Name">
+        <button onclick="addGoal()">Add</button>
+        <ul id="goalList"></ul>
+    </div>
 
-<hr>
+    <div class="card">
+        <h2>Graph Controls</h2>
+        <label>Day:</label>
+        <input type="number" id="dayInput" min="1" max="31">
 
-<h2>Graph Controls</h2>
-<label>Day:</label>
-<input type="number" id="dayInput" min="1" max="31">
+        <label>Value:</label>
+        <input type="number" id="valueInput">
 
-<label>Value:</label>
-<input type="number" id="valueInput">
+        <label>Y Max:</label>
+        <input type="number" id="yMax" placeholder="Default 10">
 
-<label>Y-Axis Max:</label>
-<input type="number" id="yMax" placeholder="Default 10">
+        <button onclick="saveDayValue()">Save Entry</button>
 
-<button onclick="saveDayValue()">Save Entry</button>
+        <br><br>
+        <button onclick="changeMonth(-1)">Previous Month</button>
+        <button onclick="changeMonth(1)">Next Month</button>
 
-<br><br>
-<button onclick="changeMonth(-1)">Previous Month</button>
-<button onclick="changeMonth(1)">Next Month</button>
+        <canvas id="goalChart"></canvas>
+    </div>
 
-<canvas id="goalChart"></canvas>
 </div>
 
 <script src="script.js"></script>
