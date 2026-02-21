@@ -7,56 +7,58 @@ let currentMonth = new Date().getMonth();
 let currentYear = new Date().getFullYear();
 let chart;
 
-// ---------------- PASSWORD ----------------
-
+// PASSWORD CHECK
 function checkPassword() {
     const input = document.getElementById("passwordInput").value;
 
     if (input === DARK_PASSWORD) {
         currentMode = "dark";
-        initApp();
-    } 
-    else if (input === BRIGHT_PASSWORD) {
+    } else if (input === BRIGHT_PASSWORD) {
         currentMode = "bright";
-        initApp();
-    } 
-    else {
+    } else {
         document.getElementById("errorMsg").innerText = "Wrong Password";
+        return;
     }
+
+    initApp();
 }
 
-// ---------------- INIT ----------------
-
+// INIT APP
 function initApp() {
     document.getElementById("loginModal").style.display = "none";
     document.getElementById("app").classList.remove("hidden");
     document.body.className = currentMode;
 
     const greeting = document.getElementById("greeting");
-
-    if (currentMode === "dark") {
-        greeting.innerText = "Welcome Loki";
-    } else {
-        greeting.innerText = "Welcome Sritej";
-    }
+    greeting.innerText = currentMode === "dark"
+        ? "Welcome Loki"
+        : "Welcome Sritej";
 
     loadGoals();
 }
 
-// ---------------- MODE SWITCH ----------------
-
+// SWITCH MODE
 function toggleMode() {
     currentMode = currentMode === "dark" ? "bright" : "dark";
     document.body.className = currentMode;
+
+    const greeting = document.getElementById("greeting");
+    greeting.innerText = currentMode === "dark"
+        ? "Welcome Loki"
+        : "Welcome Sritej";
+
+    loadGoals();
 }
 
-// ---------------- GOALS ----------------
-
+// GOALS
 function addGoal() {
     const input = document.getElementById("goalInput");
-    const goals = JSON.parse(localStorage.getItem(currentMode + "_goals")) || [];
+    if (!input.value) return;
+
+    const key = currentMode + "_goals";
+    const goals = JSON.parse(localStorage.getItem(key)) || [];
     goals.push(input.value);
-    localStorage.setItem(currentMode + "_goals", JSON.stringify(goals));
+    localStorage.setItem(key, JSON.stringify(goals));
     input.value = "";
     loadGoals();
 }
@@ -64,7 +66,9 @@ function addGoal() {
 function loadGoals() {
     const list = document.getElementById("goalList");
     list.innerHTML = "";
-    const goals = JSON.parse(localStorage.getItem(currentMode + "_goals")) || [];
+
+    const key = currentMode + "_goals";
+    const goals = JSON.parse(localStorage.getItem(key)) || [];
 
     goals.forEach(goal => {
         const li = document.createElement("li");
@@ -74,16 +78,17 @@ function loadGoals() {
     });
 }
 
+// SELECT GOAL
 function selectGoal(goal) {
     currentGoal = goal;
     loadChart();
 }
 
-// ---------------- GRAPH ----------------
-
+// GRAPH
 function loadChart() {
-    const ctx = document.getElementById("goalChart").getContext("2d");
+    if (!currentGoal) return;
 
+    const ctx = document.getElementById("goalChart").getContext("2d");
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
     const labels = Array.from({length: daysInMonth}, (_, i) => i + 1);
 
@@ -114,7 +119,10 @@ function loadChart() {
     });
 }
 
+// SAVE ENTRY
 function saveDayValue() {
+    if (!currentGoal) return;
+
     const day = parseInt(document.getElementById("dayInput").value) - 1;
     const value = parseInt(document.getElementById("valueInput").value);
 
@@ -124,11 +132,11 @@ function saveDayValue() {
 
     stored[day] = value;
     localStorage.setItem(key, JSON.stringify(stored));
+
     loadChart();
 }
 
-// ---------------- MONTH CONTROL ----------------
-
+// MONTH CHANGE
 function changeMonth(direction) {
     currentMonth += direction;
 
