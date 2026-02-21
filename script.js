@@ -39,14 +39,31 @@ function initApp() {
 
 // SWITCH MODE
 function toggleMode() {
-    currentMode = currentMode === "dark" ? "bright" : "dark";
+
+    if (currentMode === "dark") {
+        currentMode = "bright";
+    } else {
+        currentMode = "dark";
+    }
+
+    // Apply theme
     document.body.className = currentMode;
 
+    // Update greeting
     const greeting = document.getElementById("greeting");
     greeting.innerText = currentMode === "dark"
         ? "Welcome Loki"
         : "Welcome Sritej";
 
+    // Reset current goal so systems don't mix
+    currentGoal = "";
+
+    // Clear graph
+    if (chart) {
+        chart.destroy();
+    }
+
+    // Reload goals for that mode
     loadGoals();
 }
 
