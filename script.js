@@ -31,6 +31,15 @@ function initApp() {
     document.getElementById("loginModal").style.display = "none";
     document.getElementById("app").classList.remove("hidden");
     document.body.className = currentMode;
+
+    const greeting = document.getElementById("greeting");
+
+    if (currentMode === "dark") {
+        greeting.innerText = "Welcome Loki";
+    } else {
+        greeting.innerText = "Welcome Sritej";
+    }
+
     loadGoals();
 }
 
