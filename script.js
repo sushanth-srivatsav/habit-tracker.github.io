@@ -173,17 +173,37 @@ function loadChart() {
             }]
         },
         options: {
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    suggestedMax: parseInt(document.getElementById("yMax").value) || 10,
-                    title: {
-                        display: true,
-                        text: currentGoal.yLabel
-                    }
+    responsive: true,
+    interaction: {
+        intersect: false,
+        mode: "index"
+    },
+    plugins: {
+        tooltip: {
+            callbacks: {
+                label: function(context) {
+                    return context.dataset.label + ": " +
+                           Number(context.raw).toFixed(3);
                 }
             }
         }
+    },
+    scales: {
+        y: {
+            beginAtZero: true,
+            suggestedMax: parseFloat(document.getElementById("yMax").value) || 10,
+            ticks: {
+                callback: function(value) {
+                    return Number(value).toFixed(3);
+                }
+            },
+            title: {
+                display: true,
+                text: currentGoal.yLabel
+            }
+        }
+    }
+}
     });
 }
 
@@ -192,7 +212,12 @@ function saveDayValue() {
     if (!currentGoal) return;
 
     const day = parseInt(document.getElementById("dayInput").value) - 1;
-    const value = parseInt(document.getElementById("valueInput").value);
+    const value = parseFloat(document.getElementById("valueInput").value);
+
+if (isNaN(value)) {
+    alert("Please enter a valid number.");
+    return;
+}
 
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
     const key = `${currentMode}_${currentGoal.name}_${currentYear}_${currentMonth}`;
